@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:p="http://www.springframework.org/schema/p"
+    xmlns:c="http://www.springframework.org/schema/c"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans   
+       http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <bean id="user1" class="com.example.User" c:id="jgKim" c:password="1234"></bean>
+
+    <bean id="user2" class="com.example.User" c:_0="testUser" c:_1="qwer"></bean>
+
+    <bean id="userRepository" class="com.example.UserRepository">
+        <property name="users">
+            <list>
+                <ref bean="user1" />
+                <ref bean="user2" />
+            </list>
+        </property>
+    </bean>
+
+    <bean id="pwChangeSvc" class="com.example.PasswordChangeService" c:userRepository-ref="userRepository"></bean>
+
+    <bean id="authFailLogger" class="com.example.AuthFailLogger" p:threshold="2"></bean>
+
+    <bean id="authenticationService" class="com.example.AuthenticationService" 
+        p:userRepository-ref="userRepository" p:failLogger-ref="authFailLogger">
+    </bean>
+</beans>

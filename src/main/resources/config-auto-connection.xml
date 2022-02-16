@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/context
+       http://www.springframework.org/schema/context/spring-context.xsd">
+
+	<context:annotation-config />
+
+	<bean id="orderService" class="com.example.autospring.OrderService"></bean>
+
+	<bean id="productService" class="com.example.autospring.ProductService"></bean>
+
+    <bean id="orderSearchClientFactory"
+		class="com.example.factoryb.SearchClientFactoryBean">
+		<property name="server" value="google" />
+		<property name="port" value="8888" />
+		<property name="contentType" value="json" />
+	</bean>
+
+    <bean id="orderSearchClientFactory2"
+		class="com.example.factoryb.SearchClientFactoryBean">
+		<qualifier value="order" />
+		<property name="server" value="localhost" />
+		<property name="port" value="3000" />
+		<property name="contentType" value="json" />
+	</bean>
+
+	<bean id="erpClientFactory" class="com.example.factorym.ErpClientFactory"
+		factory-method="instance">
+		<constructor-arg>
+			<props>
+				<prop key="server">10.50.0.101</prop>
+			</props>
+		</constructor-arg>
+	</bean>
+
+	<bean id="ecFactory" class="com.example.factorym.ErpClientFactory" factory-method="instance"></bean>
+</beans>
